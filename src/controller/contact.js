@@ -1,9 +1,24 @@
-export class Contact {
-    constructor (id, x, y) {
-        this.id = id
+import {Controller} from './controller';
+import {Contact} from '../model/contact';
+
+export class ContactController extends Controller {
+    constructor () {
+        super();
     }
-    answer(req, res, next){
-        res.send('bem vindo ' + req.params.name);
+    findAll(req, res, next){
+        //resources
+        let contact = new Contact();
+        let answer  = {'data': contact.findAll() };
+        res.send(200,answer);
         return next();
+    }
+    update(){
+
+    }
+    delete(){
+
+    }
+    insert(req, res, next){
+        
     }
 }
