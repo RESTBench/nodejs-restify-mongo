@@ -1,14 +1,13 @@
 /*jslint node: true, indent: 2 */
 'use strict';
-// var restify, bunyan, routes, log, server;
-
-// restify = require('restify');
-// bunyan  = require('bunyan');
-// routes  = require('./routes/');
 
 import restify from 'restify';
 import bunyan from 'bunyan';
 import routes from './routes';
+import mongoose from 'mongoose';
+
+mongoose.connect('mongodb://localhost:/test');
+let db = mongoose.connection;
 
 var log = bunyan.createLogger({
   name        : 'nodejs-restify-mongo',
@@ -16,6 +15,8 @@ var log = bunyan.createLogger({
   stream      : process.stdout,
   serializers : bunyan.stdSerializers
 });
+
+
 
 var server = restify.createServer({
   name : 'nodejs-restify-mongo',

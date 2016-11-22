@@ -5,20 +5,23 @@ export class ContactController extends Controller {
     constructor () {
         super();
     }
-    findAll(req, res, next){
+    list(req, res, next){
         //resources
         let contact = new Contact();
         let answer  = {'data': contact.findAll() };
         res.send(200,answer);
         return next();
     }
-    update(){
+    change(req, res, next){
 
     }
-    delete(){
+    remove(req, res, next){
 
     }
-    insert(req, res, next){
+    add(req, res, next){
+        
+    }
+    search(req, res, next){
         
     }
 }
