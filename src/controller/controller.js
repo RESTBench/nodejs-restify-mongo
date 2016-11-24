@@ -6,4 +6,11 @@ export class Controller {
         res.send('bem vindo ' + req.params.name);
         return next();
     }
+
+    prepareAnswer(answer) {
+        if(!answer) {
+            return {'error':answer};
+        }
+        
+    }
 }

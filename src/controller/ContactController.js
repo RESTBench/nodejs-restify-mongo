@@ -6,11 +6,7 @@ export class ContactController extends Controller {
         super();
     }
     list(req, res, next){
-        //resources
-        let contact = new Contact();
-        let answer  = {'data': contact.findAll() };
-        res.send(200,answer);
-        return next();
+        
     }
     change(req, res, next){
 
@@ -19,7 +15,15 @@ export class ContactController extends Controller {
 
     }
     add(req, res, next){
-        
+        //resources
+        let contact = new Contact();
+        let answer  = contact.add({
+            'first_name':  req.params.first_name,
+            'last_name': req.params.last_name,
+            'age': req.params.age,
+        });
+        res.send(200,prepareAnswer(answer));
+        return next();
     }
     search(req, res, next){
         

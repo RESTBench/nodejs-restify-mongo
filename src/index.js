@@ -6,9 +6,6 @@ import bunyan from 'bunyan';
 import routes from './routes';
 import mongoose from 'mongoose';
 
-mongoose.connect('mongodb://localhost:/test');
-let db = mongoose.connection;
-
 var log = bunyan.createLogger({
   name        : 'nodejs-restify-mongo',
   level       : process.env.LOG_LEVEL || 'info',
@@ -64,10 +61,22 @@ server.on('uncaughtException', function (req, res, route, err) {
 /*jslint unparam:false*/
 
 server.on('after', restify.auditLogger({ log: log }));
-routes(server);
+function connect () {
+  return mongoose.connect('mongodb://localhost:27017/myapp').connection;
+}
+
+const connection = connect()
+  .on('error', console.log)
+  .on('disconnected', connect)
+  .once('open', listen);
+
+function listen () {
+  routes(server);
+  console.log('Express app started on port');
+}
 
 console.log('Server started.');
-server.listen(8888, function () {
+server.listen(8887, function () {
   log.info('%s listening at %s', server.name, server.url);
 });
 

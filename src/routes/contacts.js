@@ -1,4 +1,4 @@
-import {ContactController} from "../controller/contact";
+import {ContactController} from "../controller/ContactController";
 let contact = new ContactController();
 
 module.exports = function (server) {
