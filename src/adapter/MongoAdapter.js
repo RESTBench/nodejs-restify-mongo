@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import autoIncrement from 'mongoose-auto-increment';
 
 export class MongoAdapter {
     constructor (documentName, attributes) {
@@ -10,8 +11,12 @@ export class MongoAdapter {
     createSchema() {
         let Schema       = mongoose.Schema;
         let persistence  = new Schema(this.shemaAttributes);
-        let model        = mongoose.model(this.documentName, persistence); 
-        return model;
+        persistence.plugin(autoIncrement,{model: this.documentName, field: 'sequence', startAt: 1});
+        return mongoose.model(this.documentName, persistence); 
+    }
+
+    add(attributes){
+        let persistence = this.persistence;
     }
 
 }

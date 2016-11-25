@@ -1,25 +1,49 @@
 import {Model} from './model';
 import {Address} from './address';
+import mongoose from 'mongoose';
 
 export class Contact extends Model {
     constructor () {
+        let Schema = mongoose.Schema;
         let attributes = {
-            'first_name': 'string',
-            'last_name': 'string',
-            'age': 'number',
-            'address' : []
+            'first_name':{
+                type:'string',
+                required:true,
+                maxlength:20
+            },
+            'last_name': {
+                type:'string',
+                required:true,
+            },
+            'age': {
+                type:'number',
+                required:true,
+            },
+            'address' : [new Schema({ 
+                            street:{
+                                type:'string',
+                                required:true
+                            },
+                            'number':{
+                                type:'number',
+                                required:true
+                            },
+                            line_2:{
+                                type:'string',
+                            },
+                            postal_code:{
+                                type:'string',
+                                required:true
+                            },
+                            country:{
+                                type:'string',
+                                required:true
+                            }
+                    }
+            )]
         };
         super('contact', attributes);
         this.attributes = attributes;
-    }
-
-    add(contactAttributes){
-        let contact = this.persistence;
-        let contactAdded = {};
-        new contact(contactAttributes).save(function (err) {
-        if (err) console.log(err);
-             console.log('acertouuuuuuuuuuuuuuuuu');
-        });
     }
 
     getPersistenceAttributes(){
@@ -27,17 +51,7 @@ export class Contact extends Model {
     }
 
     getAddressList(){
-        let address = new Address();
-        let addressList = address.findAll();
-        return addressList;
-    }
-
-    findOne(){
-        
-    }
-
-    findAll(){
-        
+        return this.persistence.address;
     }
 
 }
