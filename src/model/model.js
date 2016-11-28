@@ -6,7 +6,7 @@ export class Model {
         this.entityName         = entityName;
         this.attributes         = persistenceAttributes;
         this.persistenceAdapter = this.getPersistenceAdapter(this.entityName, this.attributes);
-        this.persistence        = this.getPersistenceAdapter().persistence
+        this.persistence        = this.persistenceAdapter.persistence;
     }
     getPersistenceAdapter(entityName,attributes){
         return new MongoAdapter(entityName,attributes);
@@ -15,10 +15,8 @@ export class Model {
         return this.persistence;
     }
 
-    add($attributes){
-        let persistenceAdapter = this.getPersistenceAdapter();
-        let contactAdded = {};
-        new persistence(attributes).save(function (error) {
+    add(attributes){
+        new this.persistence(attributes).save(function (error) {
             this.error = error.errors;
         });
         if(this.error.length == 0) {

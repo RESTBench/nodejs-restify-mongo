@@ -1,39 +1,21 @@
 {
+    // Use IntelliSense to find out which attributes exist for node debugging
+    // Use hover for the description of the existing attributes
+    // For further information visit https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Debug For LH",
-            "type": "node",
+            "name": "Launch Program",
+            "type": "node2",
             "request": "launch",
             "program": "${workspaceRoot}/dist/index.js",
-            "stopOnEntry": false,
-            "args": [],
-            "cwd": "${workspaceRoot}",
-            "preLaunchTask": null,
-            "runtimeExecutable": null,
-            "runtimeArgs": [
-                "--nolazy"
-            ],
-            "port": 5858,
-            "env": {
-                "NODE_ENV": "development"
-            },
-            "console": "internalConsole",
-            "sourceMaps": false,
-            "outDir": null
+            "cwd": "${workspaceRoot}"
         },
         {
-            "name": "Attach",
-            "type": "node",
+            "name": "Attach to Process",
+            "type": "node2",
             "request": "attach",
-            "port": 5858,
-            "address": "localhost",
-            "restart": false,
-            "sourceMaps": false,
-            "outDir": null,
-            "localRoot": "${workspaceRoot}",
-            "remoteRoot": null
+            "port": 9229
         }
-
     ]
 }

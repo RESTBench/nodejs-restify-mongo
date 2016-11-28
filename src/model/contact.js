@@ -18,29 +18,8 @@ export class Contact extends Model {
             'age': {
                 type:'number',
                 required:true,
-            },
-            'address' : [new Schema({ 
-                            street:{
-                                type:'string',
-                                required:true
-                            },
-                            'number':{
-                                type:'number',
-                                required:true
-                            },
-                            line_2:{
-                                type:'string',
-                            },
-                            postal_code:{
-                                type:'string',
-                                required:true
-                            },
-                            country:{
-                                type:'string',
-                                required:true
-                            }
-                    }
-            )]
+            }
+
         };
         super('contact', attributes);
         this.attributes = attributes;

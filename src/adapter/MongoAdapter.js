@@ -9,9 +9,12 @@ export class MongoAdapter {
     }
 
     createSchema() {
+        console.log("AQUIIIIIII");
+        console.log(this.documentName);
         let Schema       = mongoose.Schema;
         let persistence  = new Schema(this.shemaAttributes);
-        persistence.plugin(autoIncrement,{model: this.documentName, field: 'sequence', startAt: 1});
+        autoIncrement.initialize(mongoose.connection);
+        persistence.plugin(autoIncrement.plugin,{model: this.documentName, field: 'sequence', startAt: 1});
         return mongoose.model(this.documentName, persistence); 
     }
 
