@@ -2,27 +2,25 @@ import {MongoAdapter} from '../adapter/MongoAdapter.js';
 
 export class Model {
     
-    constructor (entityName, persistenceAttributes ) {
+    constructor (entityName) {
         this.entityName         = entityName;
-        this.attributes         = persistenceAttributes;
-        this.persistenceAdapter = this.getPersistenceAdapter(this.entityName, this.attributes);
+        this.persistenceAdapter = this.getPersistenceAdapter(this.entityName);
         this.persistence        = this.persistenceAdapter.persistence;
     }
-    getPersistenceAdapter(entityName,attributes){
-        return new MongoAdapter(entityName,attributes);
+    getPersistenceAdapter(entityName){
+        return new MongoAdapter(entityName);
     }
     getPersistence(documentName,attributes){
         return this.persistence;
     }
 
     add(attributes){
-        new this.persistence(attributes).save(function (error) {
-            this.error = error.errors;
-        });
-        if(this.error.length == 0) {
-            return true;
+        let persistenceAdapter = this.persistenceAdapter;
+        if(!persistenceAdapter.add(attributes)){
+            this.error = persistenceAdapter.error;
+            return false;
         }
-        return false;
+        return true;
     }
 
     findOne(){

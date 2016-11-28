@@ -23,8 +23,8 @@ export class ContactController extends Controller {
             'age': req.params.age,
         }
         let answer  = contact.add(requisition);
-        if(answer){
-            res.send(300,{error:requisition});
+        if(!answer){
+            res.send(300,{error:contact.error});
         }
         res.send(200,{data:requisition});
         return next();

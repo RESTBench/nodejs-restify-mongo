@@ -1,25 +1,20 @@
 import mongoose from 'mongoose';
-import autoIncrement from 'mongoose-auto-increment';
 
 export class MongoAdapter {
     constructor (documentName, attributes) {
         this.documentName    = documentName;
-        this.shemaAttributes = attributes;
-        this.persistence     = this.createSchema();
-    }
-
-    createSchema() {
-        console.log("AQUIIIIIII");
-        console.log(this.documentName);
-        let Schema       = mongoose.Schema;
-        let persistence  = new Schema(this.shemaAttributes);
-        autoIncrement.initialize(mongoose.connection);
-        persistence.plugin(autoIncrement.plugin,{model: this.documentName, field: 'sequence', startAt: 1});
-        return mongoose.model(this.documentName, persistence); 
+        this.persistence     = mongoose.model(this.documentName);
     }
 
     add(attributes){
-        let persistence = this.persistence;
+        let document = mongoose.model(this.documentName);
+        let newDocument = new document(attributes);
+        newDocument.save(function (error) {
+           if(!typeof error == null) { 
+               this.error = error.errors;
+               return false;
+            }
+        });
     }
 
 }

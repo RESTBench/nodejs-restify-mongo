@@ -5,6 +5,9 @@ import restify from 'restify';
 import bunyan from 'bunyan';
 import routes from './routes';
 import mongoose from 'mongoose';
+import mongoSchema from './migrations/mongodb';
+import path from 'path';
+
 
 var log = bunyan.createLogger({
   name        : 'nodejs-restify-mongo',
@@ -71,6 +74,7 @@ const connection = connect()
 
 function listen () {
   routes(server);
+  mongoSchema();
   console.log('Express app started on port');
 }
 
