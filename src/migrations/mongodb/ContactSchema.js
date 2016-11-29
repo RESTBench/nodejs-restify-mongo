@@ -5,7 +5,7 @@ import autoIncrement from 'mongoose-auto-increment';
 export class ContactSchema{
 
     constructor() {
-        createSchema();
+        this.createSchema();
     }
 
     getSchemaName() {
@@ -31,11 +31,9 @@ export class ContactSchema{
     }
     createSchema(){
         let Schema  = mongoose.Schema;
-        let schema  = new Schema(getSchemaAttributes());
+        let schema  = new Schema(this.getSchemaAttributes());
         autoIncrement.initialize(mongoose.connection);
-        schema.plugin(autoIncrement.plugin,{model: getSchemaName(), field: 'sequence', startAt: 1});
-        console.log("sadasdasd");
-        console.log(mongoose.model(getSchemaName(), schema));
+        schema.plugin(autoIncrement.plugin,{model: this.getSchemaName(), field: 'sequence', startAt: 1});
+        mongoose.model(this.getSchemaName(), schema);
     }
-
 }

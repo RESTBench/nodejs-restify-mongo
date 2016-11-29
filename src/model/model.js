@@ -13,24 +13,36 @@ export class Model {
     getPersistence(documentName,attributes){
         return this.persistence;
     }
-
-    add(attributes){
+    add(attributes ){
         let persistenceAdapter = this.persistenceAdapter;
-        if(!persistenceAdapter.add(attributes)){
-            this.error = persistenceAdapter.error;
-            return false;
+        let callback = function(error){
+            this.error = this.formatError(error);
         }
-        return true;
+        return persistenceAdapter.add(attributes, callback.bind(this));
     }
-
     findOne(){
         
     }
-
     findAll(){
         
     }
-
+    formatError(errors){
+    
+        let errorList = {
+            type : errors.type,
+            message : errors.message,
+            attribute : errors.value
+        };
+        errors.forEach(function(key, value){
+            error = {
+                type : value.kind,
+                message : value.message,
+                value : value.value,
+            };
+            errorList.key = error;
+        });
+        return errorList;
+    }
     getValidations(){}
     validate(){}
     getAtributes(){}

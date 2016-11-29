@@ -22,12 +22,15 @@ export class ContactController extends Controller {
             'last_name': req.params.last_name,
             'age': req.params.age,
         }
-        let answer  = contact.add(requisition);
-        if(!answer){
-            res.send(300,{error:contact.error});
-        }
-        res.send(200,{data:requisition});
-        return next();
+        
+        contact.add(requisition).then(
+            function(error){
+                console.log('funcionou');
+                console.log(contact.error);
+                res.send(200,requisition);
+                next();
+            }
+        );
     }
     search(req, res, next){
         
