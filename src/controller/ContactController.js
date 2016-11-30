@@ -5,34 +5,31 @@ export class ContactController extends Controller {
     constructor () {
         super();
     }
-    list(req, res, next){
-        
-    }
-    change(req, res, next){
-
-    }
-    remove(req, res, next){
-
-    }
     add(req, res, next){
         //resources
         let contact = new Contact();
-        let requisition = {
+        let requisition =  {
             'first_name':  req.params.first_name,
             'last_name': req.params.last_name,
             'age': req.params.age,
-        }
+            };
         
-        contact.add(requisition).then(
-            function(error){
-                console.log('funcionou');
-                console.log(contact.error);
-                res.send(200,requisition);
-                next();
+        contact.add(requisition).then(function(error){
+            if(contact.error !=null){
+                res.send(500,contact.error);
+            }else{
+                res.send(201,{data:'OK'});
             }
-        );
+            return next();
+        });
     }
-    search(req, res, next){
-        
+
+    postErrorHandler(error){
+        if(error != null){
+            res.send(500,contact.error);
+        }else{
+            res.send(201,{data:'OK'});
+        }
+        return next();
     }
 }

@@ -27,20 +27,19 @@ export class Model {
         
     }
     formatError(errors){
-    
-        let errorList = {
-            type : errors.type,
-            message : errors.message,
-            attribute : errors.value
-        };
-        errors.forEach(function(key, value){
-            error = {
-                type : value.kind,
-                message : value.message,
-                value : value.value,
+        
+        let errorObjectList = errors.errors;    
+        let errorList = {};
+        for(let key in errorObjectList ){
+            
+            let object = errorObjectList[key];
+            let error = {
+                type : object.kind,
+                message : object.message,
+                value : object.value,
             };
-            errorList.key = error;
-        });
+            errorList[object.path] = error;
+        }
         return errorList;
     }
     getValidations(){}
